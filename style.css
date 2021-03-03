@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: grid;
+    justify-items: center;
+    background: linear-gradient(-45deg, #383331, #5f3f4c, #e6a339, #81420e);
+    background-size: 400% 400%;
+    animation: gradient 22s ease infinite;
+}
+    
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+         background-position: 100% 50%;
+    }
+    100% {
+           background-position: 0% 50%;
+    }
+}
+
+.tittle {
+    width: 60vw;
+    margin: auto;
+    justify-self: center;
+}
+.tittle h1 {
+    font-weight: 800;
+}
+
+.main-container {
+    width: auto;
+    height: 500px;
+    margin: auto;
+    background-color: rgb(255, 235, 205, 0.2);
+    border: burlywood 2px solid;
+    border-radius: 8px;
+}
+
+.visualcontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-template-rows: 5fr 1fr; */
+    /* grid-template-areas: 
+    vis vis,
+    vis vis,
+    vis vis,
+    vis vis,
+    vis vis,
+    sta sta; */
+    width: 70vw;
+    height: 300px;
+    margin: 20px;
+    background-image: url("assets/background-for-games-apps-or-mobile-development-vector-11341960.jpg");
+    /* filter: blur(2px); */
+    background-size: cover;
+    border:  #383331 3px solid;
+    border-radius: 4px;
+}
+
+.statsbox {
+    width: 1fr;
+    height: 110px;
+    color:seashell;
+    padding: 5px;
+    background-color: rgba(41, 40, 39, 0.4);
+    border:rgb(255, 235, 205, 0.5) 2px solid;
+    border-radius: 5px;
+}
+.statsbox h2{
+    display: flex;
+    justify-content: center;
+}
+.statsbox .infoplayer{
+    display: flex;
+}
+.infoplayer p{
+    padding: 10px;
+}
+
+
+.player {
+    width: 1fr;
+    height: 180px;
+    color:seashell;
+    padding: 5px;
+    background-color: rgba(41, 40, 39, 0.2);
+    border:rgb(255, 235, 205, 0.2) 2px solid;
+    border-radius: 5px;
+}
+
+
+.creationpanelcontainer {
+    width: 1fr;
+    height: 140px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 60px 1fr 1fr;
+    border:rgb(141, 122, 97) 2px solid;
+}
+
+.logpanelcontainer {
+    width: 1fr;
+    height: 40px;
+    margin: 10px;
+    padding: 5px;
+    border: chocolate 2px solid;
+    border-radius: 5px;
+    background-color: rgb(222, 184, 135, 0.3);
+}
+.btncontainer {
+    display: flex;
+    justify-content: space-around;
+    width: 1fr;
+    height: 80px;
+    margin: 10px;
+    padding: 5px;
+    border: chocolate 2px solid;
+    border-radius: 5px;
+    background-color: rgb(222, 184, 135, 0.3);
+}
+.hitbtn {
+   width: 40px;
+   height: 40px;
+}
+.btncontainer .btnpanel2 {
+    justify-content: flex-end;
+}
