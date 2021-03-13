@@ -1,15 +1,4 @@
-var race ;
-var item ;
-var nombre;
-var damage;
-var human;
-var orc;
-var elf;
-var vamp;
-var boots;
-var staff;
-var sword;
-var bow;
+
 
 //actions starting with submit button://
 document.getElementById("botoncrearplayer1").addEventListener("click", () => {   

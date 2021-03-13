@@ -102,8 +102,8 @@ botoncrearplayer1.addEventListener("click", () => {
 //Buttons Actions & Behaviors
 hitbtn1.addEventListener('click', () => {
     player2.currenthealth = player2.currenthealth - player.damage();
-    if(player2.currenthealth < 0){  //To currenthealth could go under 0 & then player lose.
-        player2.currenthealth = 0;  //
+    if(player2.currenthealth < 0){  //To allow currenthealth could go under 0 
+        player2.currenthealth = 0;  // & then player lose.
     }
     barra2.value = player2.currenthealth;
     logtext.innerHTML = logtext.innerHTML + ( " " + nombre1.innerHTML + " Attacks " + nombre2.innerHTML);
