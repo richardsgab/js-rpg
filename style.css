@@ -156,7 +156,7 @@ body {
 #hitbtn1:active, #hitbtn2:active {
      width: 55px;
      height: 55px;
-     background-image: linear-gradient(to bottom, #ffdb4d, #b80808 );
+     background-image: linear-gradient(to bottom, #ffdb4d, #e0630f );
      
  }
 

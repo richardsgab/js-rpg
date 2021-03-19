@@ -1,32 +1,39 @@
+// //Use this script to generate your character
+// function Person(race,item){
+//     this.race = race;
+//     this.item = item;
+//     this.currenthealth = 100;
+//     this.maxHealth = 100;
+    
+//     this.min = 3;
+//     this.maxDamage = 20;
+//     this.maxHealing = 30;
+
+//     this.heal = function(){
+//         var getHeal = Math.floor(Math.random() * (30 - 3) + 3);
+//         if(this.item == "Staff"){
+//             getHeal = getHeal * 1.20;
+//         }
+//         return getHeal;      
+//     };
+
+//     this.damage = function(){
+//         var damage = (Math.floor(Math.random() * (20 - 3) + 3));
+//         if(this.item == "Sword"){
+//             damage = damage * 1.30;
+//         }
+//         return damage;
+//     };   
+  
+//     this.totalDamage = this.damage();
+
+//     this.displayChar = function(){
+//         return console.log(`I am a ${this.race}, I wield a ${this.item}, my total health point are ${this.maxHealth}`);
+//     };
+// } 
 
 
-//actions starting with submit button://
-document.getElementById("botoncrearplayer1").addEventListener("click", () => {   
-    race= document.getElementById("race").value;
-    item= document.getElementById("item").value;
-    nombre= document.getElementById("name").value;  //catchs the input values(name, race & item)
-
-    var player = new Person(race, item);    //create a new player
-    player.displayChar();
-
-    document.getElementById("nombre1").innerHTML= nombre;   //change the player name in screen
-    document.getElementById("barra1").value= player.currenthealth;  //shows the starting level of health
-    document.getElementById("barra1").max= player.maxHealth;    //muestra nivel maximo de health
-
-    document.getElementById("raza1").innerHTML= "Race: " + player.race;     //shows the chosen race & item
-    document.getElementById("arma1").innerHTML= "Item: " + player.item;
-
-    randomplayer(); //create ennemy
-    player2 = new Person(player2race, player2item);
-    document.getElementById("nombre2").innerHTML= player2name;
-    document.getElementById("barra2").value= player2.currenthealth;  //shows the starting level of health
-    document.getElementById("barra2").max= player2.maxHealth;    //muestra nivel maximo de health
-    document.getElementById("raza2").innerHTML= "Race: " + player2.race;     //shows the chosen race & item
-    document.getElementById("arma2").innerHTML= "Item: " + player2.item; 
-});
-
-
-// comes from character.js
+//Use this script to generate your character
 function Person(race,item){
     this.race = race;
     this.item = item;
@@ -38,11 +45,24 @@ function Person(race,item){
     this.maxHealing = 30;
 
     this.heal = function(){
-
+        var getHeal = Math.floor(Math.random() * (30 - 3) + 3);
+        if(this.item == "Staff"){
+            getHeal = getHeal * 1.20;
+        }
+        return getHeal;          
     };
 
-    this.damage = function(){};
-
+    this.damage = function(){
+        var damage = (Math.floor(Math.random() * (20 - 3) + 3));
+        if(this.item == "Sword"){
+            damage = damage * 1.30;
+        }
+        else if(this.item == "Bow"){
+            damage = [(Math.floor(Math.random()*0.3 *(damage * 1.50)))];
+            console.log("bow sponge");
+        return damage;
+    };   
+  
     this.totalDamage = this.damage();
 
     this.displayChar = function(){
@@ -50,20 +70,36 @@ function Person(race,item){
     };
 } 
 
-
-//Random Creation of Player2
-var player2;
-var randomNames = ["BadKarma","Casanova", "YellowSnowman", "PawneeGoddess", "Babushka", "SaintBroseph", "Avocadorable",
- "FatBatman", "MomsSpaghetti", "OmnipotentBeing", "AngelWonderland"];
-var randomRace= ["Human", "Orc", "Elf", "Vampire"];
-var randomItem= ["Boots", "Staff", "Sword", "Bow"];
-
-function randomplayer(){
-    player2name = randomNames[Math.floor(Math.random()* 10)];
-    player2race = randomRace[Math.floor(Math.random() * 4)];
-    player2item = randomItem[Math.floor(Math.random() * 4)];
+healHuman = ()=> {
+    var humanprotec= this.damage;
+    if(this.race == "Human"){
+        humanprotec = humanprotec * 0.2;
+    }
+    return humanprotec;
 }
-      
-//Inicialize damage reach & Amount of Healing power
 
+    
+vampPower = () =>{
+    if(player.race == "Vampire"){
+        player2.currenthealth = player2.currenthealth - (player2.currenthealth * 0.10);
+        player.currenthealth = player.currenthealth + (player.currenthealth * 1.10);
+        console.log("Vampiro wins 10% from your blood");
+    }
+    else if(player2.race == "Vampire"){
+        player.currenthealth = player.currenthealth - (player.currenthealth * 0.10);
+        player2.currenthealth = player2.currenthealth + (player2.currenthealth * 1.10);
+        console.log("Vampiro chups 10% from your blood");
+    }
+} 
 
+elfPower = () =>{
+    if(player.race == "Elf"){
+        player2.damage= (Math.floor(Math.random()* (player2.damage * 1.5) * 0.3));
+        console.log("Elf is magic");
+    }
+    else if(player2.race == "Elf"){
+        player.damage= (Math.floor(Math.random() *  (player.damage * 1.5)* 0.3));
+        console.log("I'm an Elf and I know it");
+    }
+    return this.damage;
+}

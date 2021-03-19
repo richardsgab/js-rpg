@@ -20,7 +20,7 @@ showlogpanel = () => {
     document.getElementById("logpanel").style.display = "flex";
 }
 
-
+startGame();
 //Ends game when currentHealth = 0
 gameOver= () => {
     if(player.currenthealth === 0) {
@@ -35,7 +35,6 @@ gameOver= () => {
         showPanelCreate();
         startGame();
     } 
-    
 }
     
     
@@ -52,7 +51,7 @@ function startGame() {
     nombre1.innerHTML= "";
     nombre2.innerHTML= "";
 }
-startGame();
+
 
 
 function toggleTurn(){
@@ -108,22 +107,26 @@ hitbtn1.addEventListener('click', () => {
     barra2.value = player2.currenthealth;
     logtext.innerHTML = logtext.innerHTML + ( " " + nombre1.innerHTML + " Attacks " + nombre2.innerHTML);
     setTimeout(function(){logtext.innerHTML= "Log: "}, 1000);
-    gameOver();
+    elfPower();
     toggleTurn();
-    
-    
+    vampPower(player2);
+    gameOver();
 });
+
 hitbtn2.addEventListener('click', () => {
     player.currenthealth = player.currenthealth - player2.damage();
+    
+    
     if(player.currenthealth < 0){
         player.currenthealth = 0;
     }
     barra1.value = player.currenthealth;
     logtext.innerHTML = logtext.innerHTML + ( " " + nombre2.innerHTML + " Attacks " + nombre1.innerHTML);
     setTimeout(function(){logtext.innerHTML= "Log: "}, 1000);
-    gameOver();
+    elfPower();
     toggleTurn();
-    
+    vampPower(player);
+    gameOver();
 });
 
 healbtn1.addEventListener('click', () => {
@@ -131,9 +134,9 @@ healbtn1.addEventListener('click', () => {
     barra1.value = player.currenthealth;
     logtext.innerHTML = logtext.innerHTML + ( " " + nombre1.innerHTML + " Heals " + player.currenthealth);
     setTimeout(function(){logtext.innerHTML= "Log"}, 1000);
-    gameOver();
     toggleTurn();
-    healSpecials();
+    vampPower(player2);
+    gameOver();
 });
 
 healbtn2.addEventListener('click', () => {
@@ -141,9 +144,9 @@ healbtn2.addEventListener('click', () => {
     barra2.value = player2.currenthealth;
     logtext.innerHTML = logtext.innerHTML + ( " " + nombre2.innerHTML + " Heals " + player2.currenthealth);
     setTimeout(function(){logtext.innerHTML= "Log"}, 1000);
+    toggleTurn();
+    vampPower(player);
     gameOver();
-    toggleTurn()
-   
 });
 
 
@@ -151,14 +154,17 @@ healbtn2.addEventListener('click', () => {
 var avHuman= ["assets/humanos11.png", "assets/humanos12.png", "assets/humanos13.png", 
 "assets/humanos14.png", "assets/humanos15.png", "assets/humans16.png", "assets/humans17.png",
 "assets/humans18.png", "assets/humains19.png", "assets/human20.png"];
+
 var avOrc= ["assets/orc11.png", "assets/orc12.png", "assets/orc13.png", "assets/orc14.png",
 "assets/orc14.png", "assets/orc15.png", "assets/orc16.png", "assets/orc17.png", "assets/orc18.png",
 "assets/orc19.png", "assets/orc20.png"];
+
 var avElf= ["assets/elfhorse11.png", "assets/elfhorse12.png", "assets/elfhorse13.png", "assets/elfhorse14.png",
 "assets/elfhorse15.png", "assets/elfhorse16.png", "assets/elfhorse17.png", "assets/elfhorse18.png",
 "assets/elfhorse19.png", "assets/elfhorse20.png"];
+
 var avVamp= ["assets/vamp11.png", "assets/vamp12.png", "assets/vamp13.png", "assets/vamp14.png", "assets/vamp15.png",
-"assets/vamp16.png", "assets/vamp17.png", "assets/vamp18.png", "assets/vamp19.png", "assets/vamp20"];
+"assets/vamp16.png", "assets/vamp17.png", "assets/vamp18.png", "assets/vamp19.png", "assets/vamp20.png"];
 
 //Creation of Player2
 var player2;
@@ -222,7 +228,6 @@ function randomAvatar2(player2){
         default:
             break;
     }
-    
 }
 
 
@@ -243,34 +248,122 @@ function Person(race,item){
         if(this.item == "Staff"){
             getHeal = getHeal * 1.20;
         }
-        
-        return getHeal;      
+        return getHeal;          
     };
+       
 
     this.damage = function(){
         var damage = (Math.floor(Math.random() * (20 - 3) + 3));
         if(this.item == "Sword"){
             damage = damage * 1.30;
         }
-        return damage;
-    };   
+        else if(this.item == "Bow"){
+            var n100 = Math.floor(Math.random() * 100 + 1);
+            console.log(n100);
+            if(n100 <= 30){
+                damage = damage * 2;
+            }
+        }
+
+        if(otherhasBoots(this)){
+            var o100 = Math.floor(Math.random() * 100 + 1);
+            console.log(o100);
+            if(o100 <= 30){
+                damage = 0;
+            }
+        }
+
+        if(otherisHuman(this)){
+            damage = damage * 0.8;
+        }
+        else if(otherisElf(this)){
+            var o100 = Math.floor(Math.random() * 100 + 1);
+            if(o100 <= 30){
+                damage = 0;
+            }
+        }
+
+        this.totalDamage = Math.floor(damage);
+        console.log(this.totalDamage);
+        return this.totalDamage;
+    };
   
-    this.totalDamage = this.damage();
+    this.totalDamage = 0;
 
     this.displayChar = function(){
         return console.log(`I am a ${this.race}, I wield a ${this.item}, my total health point are ${this.maxHealth}`);
     };
 } 
 
-healSpecials = ()=> {
-    var healsp = this.currenthealth
-    if(this.race == "Orc"){
-        getHeal = (getHeal/5)*2;
-        console.log("orco heals better");
+otherhasBoots = (jugador) =>{
+    if(jugador == player){
+        if(player2.item == "Boots"){
+            return true;
+        }
     }
-    else if(player.race == "Vampire"){
-        player2.currenthealth = player2.currenthealth - (player2.currenthealth/10);
-        player.currenthealth = player.currenthealth + (player2.currenthealth/10);
-        console.log("Vampiro wins 10% from your blood");
+    else if(jugador == player2){
+        if(player.item == "Boots"){
+            return true;
+        }
     }
 }
+
+otherisHuman = (jugador) =>{
+    if(jugador == player){
+        if(player2.race == "Human"){
+            return true;
+        }
+    }
+    else if(jugador == player2){
+        if(player.race == "Human"){
+            return true;
+        }
+    }
+}
+
+
+vampPower = (vamplayer) =>{
+    if(vamplayer.race == "Vampire"){
+        if(vamplayer == player){
+            player.currenthealth = player.currenthealth + (player2.currenthealth * 0.10);
+            player2.currenthealth = player2.currenthealth - (player2.currenthealth * 0.10);
+            barra1.value= player.currenthealth;
+            barra2.value= player2.currenthealth;
+            console.log("Player1 wins 10% from your blood");
+        }
+        else if(vamplayer == player2){
+            player2.currenthealth = player2.currenthealth + (player.currenthealth * 0.10);
+            player.currenthealth = player.currenthealth - (player.currenthealth * 0.10);
+            barra1.value= player.currenthealth;
+            barra2.value= player2.currenthealth;
+            console.log("Player2 chups 10% from your blood");
+        }
+    }
+} 
+
+otherisElf = (jugador) =>{
+    if(jugador == player){
+        if(player2.race == "Elf"){
+            return true;
+        }
+    }
+    else if(jugador == player2){
+        if(player.race == "Elf"){
+            return true;
+        }
+    }
+}
+
+elfPower = (jugador) =>{   
+    if(jugador == player){
+        if(player2.race == "Elf"){
+
+        }
+    }
+}
+    
+    
+    
+
+
+
